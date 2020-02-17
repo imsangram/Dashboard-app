@@ -1,12 +1,20 @@
-const http = require('http');
-const port = process.env.PORT || 3000
+const express = require('express');
+const mongoose = require('mongoose');
+const userRouter = require('./routes/users');
+require('dotenv').config();
+const port = process.env.PORT || 4000
 
-const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/html');
-  res.end('<h1>Hello new World !!</h1>');
+const app = express();
+app.use(express.json());
+
+
+app.get('/',(req,res)=>{
+    res.send('Hello world !');
 });
 
-server.listen(port,() => {
-  console.log(`Server running at port `+port);
-});
+app.use('/api/users',userRouter);
+
+// connect to db
+mongoose.connect(process.env.DB_CONNECTION,{ useNewUrlParser: true } , ()=>{console.log('Connected to db') });
+
+app.listen(port,()=> console.log(`Listening to ${port} ....`));
