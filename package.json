@@ -1,0 +1,24 @@
+{
+  "name": "dashborad-app",
+  "version": "1.0.0",
+  "description": "Dashboard-App created using Node.js, MongoDb, Express.js",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/imsangram/Dashboard-App.git"
+  },
+  "keywords": [
+    "Node.js",
+    "Mongodb",
+    "Express.js"
+  ],
+  "author": "Sangram Nandkhile",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/imsangram/Dashboard-App/issues"
+  },
+  "homepage": "https://github.com/imsangram/Dashboard-App#readme"
+}
