@@ -1,5 +1,5 @@
 {
-  "name": "Dashboard App",
+  "name": "dashboarda-app",
   "version": "1.0.0",
   "description": "Dashboard App created using NodeJS + ExpressJs + MongoDb",
   "main": "app.js",
