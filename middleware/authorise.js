@@ -1,4 +1,5 @@
-const jwt = require('jsonwebtoken');
+const jwt = require('jsonwebtoken'),
+    { httpstatus } = require('http-status');
 
 
 module.exports = function (req, res, next) {
@@ -13,7 +14,7 @@ module.exports = function (req, res, next) {
             if (verified)
                 next();
             else
-                return res.status(401).json('Access denied !!');
+                return res.status(Htt).json('Access denied !!');
         }
         catch (err) {
             res.status(400).json('error:' + err);
