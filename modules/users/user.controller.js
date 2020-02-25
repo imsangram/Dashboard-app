@@ -1,4 +1,7 @@
-const User = require('./user.model');
+const User = require('./user.model'),
+        { registerValidation } = require('../users/user.validation'),
+        HTTPStatus = require('http-status'),
+        bcrypt = require('bcryptjs');
 
 const getUsers = async function (req, res) {
     try {
