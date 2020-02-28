@@ -1,0 +1,389 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "v1",
+    "title": "Dashboard App API",
+    "description": "Dashboard App API",
+    "termsOfService": "Terms of usage v1",
+    "contact": {
+      "name": "Sangram Nandkhile",
+      "email": "sangram@example.com"
+    }
+  },
+  "paths": {
+  "/api/Login": {
+      "post": {
+        "tags": [
+          "Access Management"
+        ],
+        "summary": "Verify user credentials and return JWT bearer token",
+        "operationId": "Login",
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "description": "Email and Password",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/UserLogin"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/UserLogin"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+			"schema": {
+			  "$ref": "#/definitions/Exception"
+			}
+          },
+          "500": {
+            "description": "Internal server Error"
+          }
+        }
+      }
+    },
+    "/api/Users": {
+      "get": {
+        "tags": [
+          "User Management"
+        ],
+        "summary": "Get all the Users",
+        "operationId": "List",
+        "consumes": [],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "uniqueItems": false,
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/User"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/Exception"
+            }
+          },
+          "404": {
+            "description": "Supplied reference was not found",
+            "schema": {
+              "$ref": "#/definitions/Exception"
+            }
+          },
+          "500": {
+            "description": "Internal server Error",
+            "schema": {
+              "$ref": "#/definitions/Exception"
+            }
+          }
+        }
+      }
+    },
+    "/api/Users/{Id}": {
+      "get": {
+        "tags": [
+          "User Management"
+        ],
+        "summary": "Get User Details by Id",
+        "operationId": "Get",
+        "consumes": [],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "path",
+            "description": "UserId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+			"schema": {
+			  "$ref": "#/definitions/Exception"
+			}
+          },
+          "404": {
+            "description": "Supplied reference was not found"
+          },
+          "500": {
+            "description": "Internal server Error",
+			"schema": {
+			  "$ref": "#/definitions/Exception"
+			}
+          }
+        }
+      }
+    },
+    "/api/Users/": {
+      "post": {
+        "tags": [
+          "User Management"
+        ],
+        "summary": "Create a new User",
+        "operationId": "Create",
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "User",
+            "in": "body",
+            "description": "UserObject",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+			"schema": {
+			  "$ref": "#/definitions/Exception"
+			}
+          },
+          "500": {
+            "description": "Internal server Error",
+			"schema": {
+			  "$ref": "#/definitions/Exception"
+			}
+          }
+        }
+      }
+    },
+    "/api/Users/{Id}/": {
+      "patch": {
+        "tags": [
+          "User Management"
+        ],
+        "summary": "Update the existing User",
+        "operationId": "Update",
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "path",
+            "description": "UserId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "User",
+            "in": "body",
+            "description": "UserDTO",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/Exception"
+            }
+          },
+          "404": {
+            "description": "Supplied reference was not found",
+            "schema": {
+              "$ref": "#/definitions/Exception"
+            }
+          },
+          "500": {
+            "description": "Internal server Error",
+            "schema": {
+              "$ref": "#/definitions/Exception"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "User Management"
+        ],
+        "summary": "Delete User",
+        "operationId": "Delete",
+        "consumes": [],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json",
+          "application/xml",
+          "text/xml"
+        ],
+        "parameters": [
+          {
+            "name": "Id",
+            "in": "path",
+            "description": "UserId",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "format": "int32",
+              "type": "integer"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "$ref": "#/definitions/Exception"
+            }
+          },
+          "404": {
+            "description": "Supplied reference was not found",
+            "schema": {
+              "$ref": "#/definitions/Exception"
+            }
+          },
+          "500": {
+            "description": "Internal server Error",
+            "schema": {
+              "$ref": "#/definitions/Exception"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "User": {
+      "type": "object",
+      "properties": {
+        "Id": {
+          "type": "string"
+        },
+        "Email": {
+          "type": "string"
+        },
+        "FirstName": {
+          "type": "string"
+        },
+        "LastName": {
+          "type": "string"
+        },
+        "Password": {
+          "type": "string"
+        }
+      }
+    },
+	"UserLogin": {
+      "type": "object",
+      "properties": {
+        "Email": {
+          "type": "string"
+        },
+        "Password": {
+          "type": "string"
+        }
+      }
+    },
+	"Exception": {
+      "type": "object",
+      "properties": {
+        "Message": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "Bearer": {
+      "name": "Authorization",
+      "in": "header",
+      "type": "apiKey",
+      "description": "JWT Authorization header using the Bearer scheme. Example: \"Authorization:Bearer{token}\" "
+    }
+  },
+  "security": [
+    {
+      "Bearer": []
+    }
+  ],
+  "tags": [
+    {
+      "name": "User Management",
+      "description": "User Management"
+    },
+	{
+      "name": "Access Management",
+      "description": "User Management"
+    }
+  ]
+}
