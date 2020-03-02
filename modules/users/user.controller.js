@@ -1,7 +1,7 @@
 const User = require('./user.model'),
-        { registerValidation } = require('../users/user.validation'),
-        HTTPStatus = require('http-status'),
-        bcrypt = require('bcryptjs');
+    { registerValidation } = require('../users/user.validation'),
+    HTTPStatus = require('http-status'),
+    bcrypt = require('bcryptjs');
 
 const getUsers = async function (req, res) {
     try {
@@ -80,17 +80,27 @@ const deleteUser = async function (req, res) {
 
 const updateUser = async function (req, res) {
     try {
-        const updatedUser = await User.updateOne({
-            _id: req.params.id
-        }, {
-            $set: {
-                firstName: req.body.firstName,
-                lastName: req.body.lastName,
-                dateOfBirth: req.body.dateOfBirth,
-                password: req.body.password
+        // validate user data
+        const { error } = registerValidation(req.body);
+        if (error)
+            return res.status(HTTPStatus.BAD_REQUEST).send(error.details[0].message);
+
+        bcrypt.hash(req.body.password, 10, async function (err, hash) {
+            if (!err) {
+                const updatedUser = await User.updateOne({
+                    _id: req.params.id
+                }, {
+                    $set: {
+                        firstName: req.body.firstName,
+                        lastName: req.body.lastName,
+                        dateOfBirth: req.body.dateOfBirth,
+                        password: req.body.password
+                    }
+                });
+
+                res.json(updatedUser);
             }
-        })
-        res.json(updatedUser);
+        });
     } catch (err) {
         res.json({
             message: `something went wrong ..${err}`

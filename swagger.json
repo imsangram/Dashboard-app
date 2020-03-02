@@ -59,6 +59,57 @@
         }
       }
     },
+	"/api/register": {
+      "post": {
+        "tags": [
+          "Access Management"
+        ],
+        "summary": "Register a new User",
+        "operationId": "Register",
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "parameters": [
+          {
+            "name": "User",
+            "in": "body",
+            "description": "UserObject",
+            "required": false,
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+			"schema": {
+			  "$ref": "#/definitions/Exception"
+			}
+          },
+          "500": {
+            "description": "Internal server Error",
+			"schema": {
+			  "$ref": "#/definitions/Exception"
+			}
+          }
+        }
+      }
+    },
     "/api/Users": {
       "get": {
         "tags": [

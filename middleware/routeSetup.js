@@ -17,7 +17,7 @@ module.exports = app => {
     app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
     // Login router
-    app.use('/api/login', loginRouter);
+    app.use('/api/', loginRouter);
 
     // Enabled authorisation for all the routes specified after this middleware
     app.use(authorise);

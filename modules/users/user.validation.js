@@ -16,7 +16,7 @@ const registerValidation = data => {
             .required()
             .min(6)
             .max(100),
-        dateOfBirth: Joi.date().required()
+        dateOfBirth: Joi.date()
     });
     return schema.validate(data);
 };
