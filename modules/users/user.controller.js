@@ -1,5 +1,5 @@
 const User = require('./user.model'),
-    { registerValidation } = require('../users/user.validation'),
+    { registerValidation, updateUserValidation } = require('../users/user.validation'),
     HTTPStatus = require('http-status'),
     bcrypt = require('bcryptjs');
 
@@ -81,9 +81,33 @@ const deleteUser = async function (req, res) {
 const updateUser = async function (req, res) {
     try {
         // validate user data
-        const { error } = registerValidation(req.body);
+        const { error } = updateUserValidation(req.body);
         if (error)
             return res.status(HTTPStatus.BAD_REQUEST).send(error.details[0].message);
+
+        var objToUpdate = {};
+        if (req.body.email) objToUpdate.email = req.body.email;
+        if (req.body.firstName) objToUpdate.firstName = req.body.firstName;
+        if (req.body.lastName) objToUpdate.lastName = req.body.lastName;
+        if (req.body.dateOfBirth) objToUpdate.dateOfBirth = req.body.dateOfBirth;
+
+        const updatedUser = await User.updateOne({
+            _id: req.params.id
+        }, {
+            $set: objToUpdate
+        });
+        res.json(updatedUser);
+    } catch (err) {
+        res.json({
+            message: `something went wrong ..${err}`
+        });
+    }
+}
+
+const updatePassword = async function (req, res) {
+    try {
+        if (req.body.password)
+            return res.status(HTTPStatus.BAD_REQUEST).send('Password is required');
 
         bcrypt.hash(req.body.password, 10, async function (err, hash) {
             if (!err) {
@@ -91,13 +115,9 @@ const updateUser = async function (req, res) {
                     _id: req.params.id
                 }, {
                     $set: {
-                        firstName: req.body.firstName,
-                        lastName: req.body.lastName,
-                        dateOfBirth: req.body.dateOfBirth,
-                        password: req.body.password
+                        password: hash
                     }
                 });
-
                 res.json(updatedUser);
             }
         });
@@ -113,5 +133,6 @@ module.exports = {
     getUserById: getUserById,
     addUser: addUser,
     deleteUser: deleteUser,
-    updateUser: updateUser
+    updateUser: updateUser,
+    updatePassword: updatePassword
 }
