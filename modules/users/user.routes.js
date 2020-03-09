@@ -4,12 +4,12 @@ const express = require('express'),
 
 router.get('/', UserController.getUsers);
 
-router.post('/', UserController.addUser);
-
 router.get('/:id', UserController.getUserById);
 
 router.delete('/:id', UserController.deleteUser);
 
 router.patch('/:id', UserController.updateUser);
+
+router.patch('/:id/password', UserController.updatePassword);
 
 module.exports = router;

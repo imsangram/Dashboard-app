@@ -1,11 +1,11 @@
 const jwt = require('jsonwebtoken'),
-    { httpstatus } = require('http-status');
+    HTTPStatus = require('http-status');
 
 
 module.exports = function (req, res, next) {
     const token = extractToken(req);
     if (token == null) {
-        return res.status(401).json('Unautherised');
+        return res.status(HTTPStatus.UNAUTHORIZED).json('Unautherised request. Access denied !!');
     }
     else {
 
@@ -14,10 +14,10 @@ module.exports = function (req, res, next) {
             if (verified)
                 next();
             else
-                return res.status(Htt).json('Access denied !!');
+                return res.status(HTTPStatus.UNAUTHORIZED).json('Unautherised request. Access denied !!');
         }
         catch (err) {
-            res.status(400).json('error:' + err);
+            res.status(HTTPStatus.UNAUTHORIZED).json('Error in JWT verification :' + err);
         }
     }
 

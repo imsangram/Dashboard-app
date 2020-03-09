@@ -16,9 +16,26 @@ const registerValidation = data => {
             .required()
             .min(6)
             .max(100),
-        dateOfBirth: Joi.date().required()
+        dateOfBirth: Joi.date()
     });
     return schema.validate(data);
 };
 
+const updateUserValidation = data => {
+    const schema = Joi.object({
+        email: Joi.string()
+            .required()
+            .min(6)
+            .email(),
+        firstName: Joi.string()
+            .required()
+            .max(20),
+        lastName: Joi.string()
+            .required()
+            .max(20),
+        dateOfBirth: Joi.date()
+    });
+    return schema.validate(data);
+};
 module.exports.registerValidation = registerValidation;
+module.exports.updateUserValidation = updateUserValidation;
